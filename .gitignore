@@ -2,6 +2,6 @@
 .vs/
 bin/
 obj/
-identity-provider/Docs/.env
 *.user
+identity-provider/Docs/.env
 identity-provider/IdentityServer/tempkey.jwk
