@@ -44,6 +44,11 @@ This will fail with `403`. This means that:
   - `azp` claim is present and matches the Client ID setting
   - `aud` claim is present and matches the Audience setting
   - `scp` claim is present and is a valid SMART system scope
+  - `roles` claim is present and contains `smartUser`. This is not documented,
+    but seems to be required by looking at the source ([here][1] and [here][2]).
+
+[1]: https://github.com/microsoft/fhir-server/blob/main/src/Microsoft.Health.Fhir.Core/Features/Security/Authorization/RoleBasedFhirAuthorizationService.cs
+[2]: https://github.com/microsoft/fhir-server/blob/main/src/Microsoft.Health.Fhir.Shared.Web/roles.json
 
 ```http
 GET {{$dotenv fhirserver}}/Patient

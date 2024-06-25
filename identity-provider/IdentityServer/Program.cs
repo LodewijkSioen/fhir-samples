@@ -60,6 +60,8 @@ public class CustomTokenRequestValidator : ICustomTokenRequestValidator
             context.Result.ValidatedRequest.ClientClaims.Add(new Claim("fhirUser", "https://example.org/Practitioner/123456798"));
         }
 
+        context.Result.ValidatedRequest.ClientClaims.Add(new Claim("roles", "smartUser"));
+
         //Rename 'scope' to 'scp' to follow the documentation
         context.Result.ValidatedRequest.ClientClaims.Add(new("scp",
             string.Join(' ', context.Result.ValidatedRequest.ValidatedResources.ParsedScopes.Select(s => s.RawValue))));
