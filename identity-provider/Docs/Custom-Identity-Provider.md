@@ -50,6 +50,20 @@ This will fail with `403`. This means that:
 [1]: https://github.com/microsoft/fhir-server/blob/main/src/Microsoft.Health.Fhir.Core/Features/Security/Authorization/RoleBasedFhirAuthorizationService.cs
 [2]: https://github.com/microsoft/fhir-server/blob/main/src/Microsoft.Health.Fhir.Shared.Web/roles.json
 
+However: the content of the `403` is an [OperationOutcome][3] resource. This 
+means that the response is coming from inside the FHIR server. So whatever 
+magic Azure has put in front of the FHIR server to allow multiple Identity
+Providers is not blocking the request anymore.
+
+Looking at the [code][4] I would speculate that the Azure version of the FHIR
+service is configured to either:
+- Use a different claim to identify the role via [RolesClaim][5]
+- Use a different name for the `smartUser` role via [roles.json][2]
+
+[3]: http://hl7.org/fhir/R4/operationoutcome.html
+[4]: https://github.com/microsoft/fhir-server
+[5]: https://github.com/microsoft/fhir-server/blob/414f8b302516154d5758941b15266d63dd3c89e7/src/Microsoft.Health.Fhir.Core/Configs/AuthorizationConfiguration.cs#L14
+
 ```http
 GET {{$dotenv fhirserver}}/Patient
 Authorization: Bearer {{token}}
